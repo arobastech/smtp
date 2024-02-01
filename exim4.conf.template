@@ -1639,7 +1639,7 @@ remote_smtp:
   debug_print = "T: remote_smtp for $local_part@$domain"
   driver = smtp
   hosts_require_auth = *
-  authentication = plain
+  hosts_avoid_tls = * 
 
 .ifdef REMOTE_SMTP_HOSTS_AVOID_TLS
   hosts_avoid_tls = REMOTE_SMTP_HOSTS_AVOID_TLS
@@ -1868,6 +1868,23 @@ begin rewrite
 ######################################################################
 
 begin authenticators
+
+# plain auth (should only be used with SSL)
+plain:
+  driver = plaintext
+  public_name = PLAIN
+  server_condition = "${if pam{$2:$3}{1}{0}}"
+  server_set_id = $2
+  client_send = "^username^password"
+
+# login auth (should only be used with SSL)
+login:
+  driver = plaintext
+  public_name = LOGIN
+  server_prompts = "Username:: : Password::"
+  server_condition = "${if pam{$1:$2}{1}{0}}"
+  server_set_id = $1
+  client_send = "username : password"
 
 
 #####################################################
