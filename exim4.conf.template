@@ -1640,7 +1640,8 @@ remote_smtp:
   driver = smtp
   hosts_require_auth = *
   hosts_require_tls = *
-  authentication = plain
+  authenticators = plain_saslauthd_server : login_saslauthd_server
+
 .ifdef REMOTE_SMTP_HOSTS_AVOID_TLS
   hosts_avoid_tls = REMOTE_SMTP_HOSTS_AVOID_TLS
 .endif
