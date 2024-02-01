@@ -1638,8 +1638,7 @@ remote_smtp:
   debug_print = "T: remote_smtp for $local_part@$domain"
   driver = smtp
   hosts_require_auth = *
-  hosts_avoid_tls = * 
-  condition = ${if eq{$interface_port}{25}{1}{0}}
+  hosts_avoid_tls = *
 
 .ifdef REMOTE_SMTP_HOSTS_AVOID_TLS
   hosts_avoid_tls = REMOTE_SMTP_HOSTS_AVOID_TLS
