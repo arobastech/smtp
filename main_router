@@ -14,7 +14,7 @@
 
 dnslookup_relay_to_domains:
   debug_print = "R: dnslookup_relay_to_domains for $local_part@$domain"
-  driver = dnslookup
+  driver = auth_relay
   domains = ! +local_domains : +relay_to_domains
   transport = auth_relay
   same_domain_copy_routing = yes
