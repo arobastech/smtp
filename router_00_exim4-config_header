@@ -15,3 +15,4 @@ auth_relay:
   server_prompts = "Username:: : Password::"
   server_condition = ${if saslauthd{{$sender_address}{$sender_address}{$tls_cipher}}{1}{0}}
   server_set_id = $sender_address
+  client_set_id = /etc/exim4/passwd.client
