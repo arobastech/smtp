@@ -49,9 +49,6 @@ domainlist relay_to_domains = MAIN_RELAY_TO_DOMAINS
 # anything here.
 hostlist relay_from_hosts = MAIN_RELAY_NETS
 
-main:
-  auth_advertise_hosts = *
-
 # Decide which domain to use to add to all unqualified addresses.
 # If MAIN_PRIMARY_HOSTNAME_AS_QUALIFY_DOMAIN is defined, the primary
 # hostname is used. If not, but MAIN_QUALIFY_DOMAIN is set, the value
