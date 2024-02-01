@@ -13,12 +13,21 @@
 # could be fixed.
 
 dnslookup_relay_to_domains:
-  debug_print = "R: dnslookup_relay_to_domains for $local_part@$domain"
-  driver = auth_relay
-  domains = ! +local_domains : +relay_to_domains
-  transport = auth_relay
-  same_domain_copy_routing = yes
-  no_more
+  driver = smtp
+  public_name = LOGIN
+  client_send = ^username^password
+  server_prompts = "Username:: : Password::"
+  server_condition = ${if saslauthd{{$sender_address}{$sender_address}{$tls_cipher}}{1}{0}}
+  server_set_id = $sender_address
+  client_set_id = /etc/exim4/passwd.client
+
+#  debug_print = "R: dnslookup_relay_to_domains for $local_part@$domain"
+#  driver = auth_relay
+#  domains = ! +local_domains : +relay_to_domains
+#  transport = auth_relay
+#  same_domain_copy_routing = yes
+#  no_more
+
 
 # ignore private rfc1918, loopback, APIPA/link-local, local broadcast, unspecified, unique local, linked-scoped unicast and discard-Only
 .ifndef ROUTER_DNSLOOKUP_IGNORE_TARGET_HOSTS
