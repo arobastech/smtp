@@ -1,0 +1,19 @@
+######################################################################
+#                   AUTHENTICATION CONFIGURATION                     #
+######################################################################
+
+begin authenticators
+
+plain_saslauthd_server:
+  driver = plaintext
+  public_name = PLAIN
+  server_condition = ${if saslauthd{{$auth2}{$auth3}}{1}{0}}
+  server_set_id = $auth2
+  server_prompts = :
+
+login_saslauthd_server:
+  driver = plaintext
+  public_name = LOGIN
+  server_prompts = "Username:: : Password::"
+  server_condition = ${if saslauthd{{$auth1}{$auth2}}{1}{0}}
+  server_set_id = $auth1
