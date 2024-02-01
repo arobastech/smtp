@@ -1,0 +1,17 @@
+######################################################################
+#                      ROUTERS CONFIGURATION                         #
+#               Specifies how addresses are handled                  #
+######################################################################
+#     THE ORDER IN WHICH THE ROUTERS ARE DEFINED IS IMPORTANT!       #
+# An address is passed to each router in turn until it is accepted.  #
+######################################################################
+
+begin routers
+
+auth_relay:
+  driver = smtp
+  public_name = LOGIN
+  client_send = ^username^password
+  server_prompts = "Username:: : Password::"
+  server_condition = ${if saslauthd{{$sender_address}{$sender_address}{$tls_cipher}}{1}{0}}
+  server_set_id = $sender_address
