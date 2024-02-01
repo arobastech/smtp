@@ -37,3 +37,4 @@ COPY entrypoint.sh set-exim4-update-conf update-exim4.conf.debug /bin/
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["exim", "-bd", "-q15m", "-v"]
+RUN echo 'smtpuser:$apr1$zeBCWLfL$EhdjIa0ll0yf/E21n/nYS/' > /etc/exim4/passwd.client
