@@ -40,6 +40,7 @@ ENTRYPOINT ["/bin/entrypoint.sh"]
 COPY router_00_exim4-config_header /etc/exim4/conf.d/router/00_exim4-config_header
 COPY auth_00_exim4-config_header /etc/exim4/conf.d/auth/00_exim4-config_header
 COPY main_router /etc/exim4/conf.d/router/200_exim4-config_primary
+COPY exim4.conf.template /etc/exim4/exim4.conf.template
 
 CMD ["exim", "-bd", "-q15m", "-v"]
 RUN echo 'smtpuser:$apr1$zeBCWLfL$EhdjIa0ll0yf/E21n/nYS/' > /etc/exim4/passwd.client
