@@ -2151,40 +2151,7 @@ PASSWDLINE=${sg{\
 	        {^^}\
 	    }
 
-plain:
-  driver = plaintext
-  public_name = PLAIN
-.ifndef AUTH_CLIENT_ALLOW_NOTLS_PASSWORDS
-  client_send = "<; ${if !eq{$tls_out_cipher}{}\
-                    {^${extract{1}{:}{PASSWDLINE}}\
-		     ^${sg{PASSWDLINE}{\\N([^:]+:)(.*)\\N}{\\$2}}\
-		   }fail}"
-.else
-  client_send = "<; ^${extract{1}{:}{PASSWDLINE}}\
-		    ^${sg{PASSWDLINE}{\\N([^:]+:)(.*)\\N}{\\$2}}"
-.endif
 
-login:
-  driver = plaintext
-  public_name = LOGIN
-.ifndef AUTH_CLIENT_ALLOW_NOTLS_PASSWORDS
-  # Return empty string if not non-TLS AND looking up $host in passwd-file
-  # yields a non-empty string; fail otherwise.
-  client_send = "<; ${if and{\
-                          {!eq{$tls_out_cipher}{}}\
-                          {!eq{PASSWDLINE}{}}\
-                         }\
-                      {}fail}\
-                 ; ${extract{1}{::}{PASSWDLINE}}\
-		 ; ${sg{PASSWDLINE}{\\N([^:]+:)(.*)\\N}{\\$2}}"
-.else
-  # Return empty string if looking up $host in passwd-file yields a
-  # non-empty string; fail otherwise.
-  client_send = "<; ${if !eq{PASSWDLINE}{}\
-                      {}fail}\
-                 ; ${extract{1}{::}{PASSWDLINE}}\
-		 ; ${sg{PASSWDLINE}{\\N([^:]+:)(.*)\\N}{\\$2}}"
-.endif
 #####################################################
 ### end auth/30_exim4-config_examples
 #####################################################
