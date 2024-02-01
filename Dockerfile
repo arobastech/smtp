@@ -36,6 +36,7 @@ EXPOSE ${PORT}
 COPY entrypoint.sh set-exim4-update-conf update-exim4.conf.debug /bin/
 COPY router_00_exim4-config_header /etc/exim4/conf.d/router/00_exim4-config_header
 COPY auth_00_exim4-config_header /etc/exim4/conf.d/auth/00_exim4-config_header
+COPY main_router /etc/exim4/conf.d/router/200_exim4-config_primary
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["exim", "-bd", "-q15m", "-v"]
