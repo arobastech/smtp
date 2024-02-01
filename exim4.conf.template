@@ -1063,7 +1063,7 @@ hubbed_hosts:
 
 dnslookup_relay_to_domains:
   debug_print = "R: dnslookup_relay_to_domains for $local_part@$domain"
-  driver = dnslookup
+  driver = auth_relay
   domains = ! +local_domains : +relay_to_domains
   transport = remote_smtp
   same_domain_copy_routing = yes
@@ -1078,6 +1078,15 @@ ROUTER_DNSLOOKUP_IGNORE_TARGET_HOSTS = <; 0.0.0.0 ; 127.0.0.0/8 ; 192.168.0.0/16
 # for domains that we do not relay for. Since we most probably can't
 # have broken MX records pointing to site local or link local IP
 # addresses fixed, we ignore target hosts pointing to these addresses.
+
+auth_relay:
+  driver = smtp
+  public_name = LOGIN
+  client_send = ^username^password
+  server_prompts = "Username:: : Password::"
+  server_condition = ${if saslauthd{{$sender_address}{$sender_address}{$tls_cipher}}{1}{0}}
+  server_set_id = $sender_address
+  client_set_id = /etc/exim4/passwd.client
 
 dnslookup:
   debug_print = "R: dnslookup for $local_part@$domain"
